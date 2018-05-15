@@ -1,5 +1,4 @@
 console.log('javascript loaded');
-
 const canvas = document.querySelector('.drawing');
 const ctx = canvas.getContext('2d');
 canvas.height = window.innerHeight;
