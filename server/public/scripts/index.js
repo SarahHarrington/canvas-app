@@ -13,6 +13,11 @@ let lastX = 0;
 let lastY = 0;
 let lines = [];
 
+function documentLoaded() {
+  document.onload();
+  socket.on('lines', lines);
+}
+
 function drawing(e) {
   if (!drawingActive) {
     return
@@ -35,14 +40,19 @@ function drawing(e) {
     endY: e.offsetY
   }
   lines.push(line);
+  socket.emit('lines', lines);
+  
   [lastX, lastY] = [e.offsetX, e.offsetY];
   console.log(lines);
 }
 
+// socket.on('lines', function(lines){
+//   console.log('lines back from the server')
+// })
+
 canvas.addEventListener('mousedown', (e) => {
   drawingActive = true;
   [lastX, lastY] = [e.offsetX, e.offsetY];
-
 });
 
 canvas.addEventListener('mousemove', drawing);
