@@ -9,11 +9,17 @@ app.use(express.static('server/public'));
 let lineHistory = [];
 
 io.on('connection', function(socket){
+  // console.log('line history', lineHistory)
+  // socket.on('lineHistory', function() {
+  //   lineHistory.forEach(line => {
+  //     io.emit('lineHistory', line);
+  //   })
+  // })
   console.log('a user connected');
   socket.on('lines', function(lines){
-    lineHistory = [...lines];
-    io.emit('lineHistory', lineHistory);
+    lineHistory.push(lines);
   })
+  console.log('lineHistory', lineHistory)
 });
 
 server.listen(port, function() {

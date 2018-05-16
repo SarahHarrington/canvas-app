@@ -15,7 +15,7 @@ let lines = [];
 
 function documentLoaded() {
   document.onload();
-  socket.on('lines', lines);
+  // socket.on('lineHistory', lines);
 }
 
 function drawing(e) {
@@ -44,6 +44,10 @@ function drawing(e) {
   
   [lastX, lastY] = [e.offsetX, e.offsetY];
   console.log(lines);
+
+  socket.on('lineHistory', function(alllines) {
+    console.log('line history back from server', alllines);
+  })
 }
 
 // socket.on('lines', function(lines){
