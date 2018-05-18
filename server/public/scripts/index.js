@@ -28,7 +28,7 @@ function drawing(e) {
     endX: 0,
     endY: 0
   }
-  console.log(e);
+  // console.log(e);
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
   ctx.lineTo(e.offsetX, e.offsetY);
@@ -45,9 +45,16 @@ function drawing(e) {
   [lastX, lastY] = [e.offsetX, e.offsetY];
   console.log(lines);
 
-  socket.on('lineHistory', function(alllines) {
-    console.log('line history back from server', alllines);
+  socket.on('lines', function(lines){
+    console.log('lines back from server', lines)
+    ctx.beginPath(lines);
+    ctx.moveTo(lines.startX, lines.startY);
+    ctx.lineTo(lines.endX, lines.endY);
+    ctx.stroke();
   })
+  // socket.on('lineHistory', function(alllines) {
+  //   console.log('line history back from server', alllines);
+  // })
 }
 
 // socket.on('lines', function(lines){
