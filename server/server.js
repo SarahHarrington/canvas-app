@@ -1,24 +1,34 @@
-const http = require('http');
 const express = require ('express');
 const app = express();
-const server = http.createServer(app);
-let io = require('socket.io').listen(server);
-const port = 5000;
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const PORT = process.env.PORT || 3000;
 
-app.use(express.static('server/public'));
-let lineHistory = [];
+app.use(express.static(`${__dirname}/public`));
 
-io.on('connection', function(socket){
-  // lineHistory.forEach
+let drawing = {
+  clients: {},
+  paths: {},
+  last: {}
+}
 
+io.on('connection', socket => {
   console.log('a user connected');
-  socket.on('lines', function(lines){
-    console.log(lines);
-    io.emit('lines', lines)
+  console.log(socket.id)
+  drawing.clients[socket.id] = 
+    {
+      paths: [],
+      last: 
+    };
+  console.log(drawing)
+  socket.emit('newClientConnection', {
+    id: socket.id
   })
-  // console.log('lineHistory', lineHistory)
+
+  socket.on('userDrawing', function(data) {
+    console.log(data.line);
+    io.emit('userDrawing', {line: data.line})
+  })
 });
 
-server.listen(port, function() {
-  console.log('listening on port:', port)
-})
+http.listen(PORT, () => console.log(`listening on port ${PORT}`));
