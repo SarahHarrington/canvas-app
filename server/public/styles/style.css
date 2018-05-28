@@ -5,3 +5,8 @@
 h1 {
   font-family: 'Permanent Marker', cursive;
 }
+
+.canvas {
+  height: 100%;
+  width: 100%;
+}

@@ -16,18 +16,13 @@ io.on('connection', socket => {
   console.log('a user connected');
   console.log(socket.id)
   drawing.clients[socket.id] = 
-    {
-      paths: [],
-      last: 
-    };
-  console.log(drawing)
   socket.emit('newClientConnection', {
     id: socket.id
   })
 
-  socket.on('userDrawing', function(data) {
-    console.log(data.line);
-    io.emit('userDrawing', {line: data.line})
+  socket.on('userDrawing', line => {
+    console.log(line);
+    io.emit('userDrawing', line)
   })
 });
 
