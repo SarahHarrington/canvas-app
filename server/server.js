@@ -15,13 +15,15 @@ let drawing = {
 io.on('connection', socket => {
   console.log('a user connected');
   console.log(socket.id)
-  drawing.clients[socket.id] = 
+  drawing.clients[socket.id] = socket.id;
+  console.log(drawing.clients)
   socket.emit('newClientConnection', {
     id: socket.id
   })
 
   socket.on('userDrawing', line => {
     console.log(line);
+    
     io.emit('userDrawing', line)
   })
 });

@@ -21,8 +21,14 @@ function domReady() {
   // const canvasArea = document.querySelector('#drawing');
 
   let drawingActive = false;
-  let lastX;
-  let lastY;
+  // let lastX;
+  // let lastY;
+  let mouse = {
+    startX: 0,
+    startY: 0,
+    endX: 0,
+    endY: 0
+  }
   // let lines = [];
 
   let line = {
@@ -37,40 +43,40 @@ function domReady() {
       return
     }
     // console.log(e);
-
     ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
+    ctx.moveTo(mouse.startX, mouse.startY);
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
+    // [line.endX, line.endY] = [e.offsetX, e.offsetY];
 
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-    [line.endX, line.endY] = [lastX, lastY];
+    [mouse.startX, mouse.startY] = [e.offsetX, e.offsetY];
 
     socket.emit('userDrawing', {
       line: line
     });
-
-    socket.on('userDrawing', (line) => {
-      console.log(line.line.startX)
-    })
-
   }
+
+  socket.on('userDrawing', (line) => {
+    ctx.beginPath();
+    ctx.moveTo(line.line.startX, line.line.startY);
+    ctx.lineTo(line.line.endX, line.line.endY);
+    ctx.stroke();
+  })
 
   canvas.addEventListener('mousedown', (e) => {
     drawingActive = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-    [line.startX, line.startY] = [e.offsetX, e.offsetY]
+    [mouse.startX, mouse.startY] = [e.offsetX, e.offsetY];
+    [line.startX, line.startY] = [mouse.startX, mouse.startY]
     // [line.endX, line.endY] = [e.offsetX, e.offsetY];
   });
 
-  // canvas.addEventListener('mouseup', (e) => {
-  //   drawingActive = false;
-  //   [endX, endY] = [e.offsetX, e.offsetY];
-  // });
-
-
   canvas.addEventListener('mousemove', drawing);
-  canvas.addEventListener('mouseup', () => drawingActive = false);
+  canvas.addEventListener('mouseup', (e) => {
+    drawingActive = false
+    console.log(e);
+    console.log(drawingActive)
+    // [line.endX, line.endY] = [e.offsetX, e.offsetY];
+  });
   canvas.addEventListener('mouseout', () => drawingActive = false);
 }
 
