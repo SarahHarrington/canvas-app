@@ -4,10 +4,21 @@ function domReady() {
   const socket = io();
   let canvas = document.createElement('canvas');
   let ctx = canvas.getContext('2d');
+
+  let drawingActive = false;
+  let mouse = {
+    startX: 0,
+    startY: 0,
+    endX: 0,
+    endY: 0,
+    color: 'black',
+    lineWidth: 5
+  }
+
   canvas.classList.add('drawing');
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
-  ctx.strokeStyle = '#6600cc';
+  // ctx.strokeStyle = `${mouse.color}`;
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
   ctx.lineWidth = 5;
@@ -18,64 +29,50 @@ function domReady() {
     document.body.appendChild(canvas);
   })
 
-  // const canvasArea = document.querySelector('#drawing');
+  let colors = document.querySelectorAll('.color');
+  colors.forEach( (color) => {
+    color.addEventListener('click', updateColor)
+  })
 
-  let drawingActive = false;
-  // let lastX;
-  // let lastY;
-  let mouse = {
-    startX: 0,
-    startY: 0,
-    endX: 0,
-    endY: 0
-  }
-  // let lines = [];
+  console.log(colors)
 
-  let line = {
-    startX: 0,
-    startY: 0,
-    endX: 0,
-    endY: 0
+  function updateColor(e) {
+    mouse.color = e.target.getAttribute('id');
+    console.log(mouse.color)
   }
 
   function drawing(e) {
     if (!drawingActive) {
       return
     }
-    // console.log(e);
+    ctx.strokeStyle = `${mouse.color}`;
     ctx.beginPath();
-    ctx.moveTo(mouse.startX, mouse.startY);
+    ctx.moveTo(mouse.endX, mouse.endY);
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
-    // [line.endX, line.endY] = [e.offsetX, e.offsetY];
+    [mouse.startX, mouse.startY] = [mouse.endX, mouse.endY];
+    [mouse.endX, mouse.endY] = [e.offsetX, e.offsetY];
 
-    [mouse.startX, mouse.startY] = [e.offsetX, e.offsetY];
-
-    socket.emit('userDrawing', {
-      line: line
-    });
+    socket.emit('userDrawing', mouse);
   }
 
   socket.on('userDrawing', (line) => {
+    ctx.strokeStyle = `${line.color}`;
     ctx.beginPath();
-    ctx.moveTo(line.line.startX, line.line.startY);
-    ctx.lineTo(line.line.endX, line.line.endY);
+    ctx.moveTo(line.startX, line.startY);
+    ctx.lineTo(line.endX, line.endY);
     ctx.stroke();
   })
 
   canvas.addEventListener('mousedown', (e) => {
     drawingActive = true;
-    [mouse.startX, mouse.startY] = [e.offsetX, e.offsetY];
-    [line.startX, line.startY] = [mouse.startX, mouse.startY]
-    // [line.endX, line.endY] = [e.offsetX, e.offsetY];
+    [mouse.endX, mouse.endY] = [e.offsetX, e.offsetY];
   });
-
   canvas.addEventListener('mousemove', drawing);
   canvas.addEventListener('mouseup', (e) => {
     drawingActive = false
     console.log(e);
     console.log(drawingActive)
-    // [line.endX, line.endY] = [e.offsetX, e.offsetY];
   });
   canvas.addEventListener('mouseout', () => drawingActive = false);
 }

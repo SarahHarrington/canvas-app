@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,8 +11,20 @@
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="/scripts/index.js"></script>
 </head>
+
 <body>
-  <h1>Canvas Playground</h1>
-  <div id="drawing"></div>
+  <div class="container">
+    <h1>Canvas Playground</h1>
+    <div class="color-select">
+      <div class="color red" id="red"></div>
+      <div class="color orange" id="orange"></div>
+      <div class="color yellow" id="yellow"></div>
+      <div class="color green" id="green"></div>
+      <div class="color blue" id="blue"></div>
+      <div class="color violet" id="violet"></div>
+    </div>
+    <div id="drawing"></div>
+  </div>
 </body>
+
 </html>
