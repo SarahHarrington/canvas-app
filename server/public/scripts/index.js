@@ -31,6 +31,7 @@ function domReady() {
   })
 
   let colors = document.querySelectorAll('.color');
+  console.log(colors)
   colors.forEach( (color) => {
     color.addEventListener('click', updateColor)
   })
@@ -41,6 +42,7 @@ function domReady() {
   console.log(colors)
 
   function updateColor(e) {
+    console.log(e)
     mouse.color = e.target.getAttribute('id');
     console.log(mouse.color)
   }

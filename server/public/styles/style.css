@@ -30,25 +30,29 @@ h1 {
 }
 
 .red {
-  background: red;
+  color: red;
 }
 
 .orange {
-  background: orange;
+  color: orange;
 }
 
 .yellow {
-  background: yellow;
+  color: yellow;
 }
 
 .green {
-  background: green;
+  color: green;
 }
 
 .blue {
-  background: blue;
+  color: blue;
 }
 
 .violet {
-  background: #7400B2;
+  color: #7400B2;
+}
+
+.paint-icon {
+  backgroundbackground: white;
 }

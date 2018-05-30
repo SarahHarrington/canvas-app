@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Canvas Playground</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="/vendors/fontawesome-all.min.css"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/styles/style.css">
   <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
   <script src="/socket.io/socket.io.js"></script>
@@ -16,12 +18,13 @@
   <div class="container">
     <h1>Canvas Playground</h1>
     <div class="color-select">
-      <div class="color red" id="red"></div>
-      <div class="color orange" id="orange"></div>
-      <div class="color yellow" id="yellow"></div>
-      <div class="color green" id="green"></div>
-      <div class="color blue" id="blue"></div>
-      <div class="color violet" id="#7400B2"></div>
+      <p>Color:</p>
+      <div class="color" ><i class="fas fa-paint-brush red" id="red"></i></div>
+      <div class="color" id="orange"><i class="fas fa-paint-brush orange"></i></div>
+      <div class="color" id="yellow"><i class="fas fa-paint-brush yellow"></i></div>
+      <div class="color" id="green"><i class="fas fa-paint-brush green"></i></div>
+      <div class="color" id="blue"><i class="fas fa-paint-brush blue"></i></div>
+      <div class="color" id="#7400B2"><i class="fas fa-paint-brush violet"></i></div>
       <input label="line width" class="line-width" type="range" min="1" max="20" step="1">
     </div>
     <div id="drawing"></div>
