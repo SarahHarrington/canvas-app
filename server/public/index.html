@@ -7,7 +7,8 @@
   <title>Canvas Playground</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <link rel="stylesheet" href="/vendors/fontawesome-all.min.css"> -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+    crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/styles/style.css">
   <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
   <script src="/socket.io/socket.io.js"></script>
@@ -16,17 +17,49 @@
 
 <body>
   <div class="container">
-    <h1>Canvas Playground</h1>
-    <div class="color-select">
-      <p>Color:</p>
-      <div class="color" ><i class="fas fa-paint-brush red" id="red"></i></div>
-      <div class="color" id="orange"><i class="fas fa-paint-brush orange"></i></div>
-      <div class="color" id="yellow"><i class="fas fa-paint-brush yellow"></i></div>
-      <div class="color" id="green"><i class="fas fa-paint-brush green"></i></div>
-      <div class="color" id="blue"><i class="fas fa-paint-brush blue"></i></div>
-      <div class="color" id="#7400B2"><i class="fas fa-paint-brush violet"></i></div>
-      <input label="line width" class="line-width" type="range" min="1" max="20" step="1">
+    <h1 class="header">Canvas Playground</h1>
+    <div class="editing-tools">
+      <!-- Edit tools -->
+      <div class="color-select">
+        <!-- Paintbrushes -->
+        <div class="color" id="red">
+          <i class="fas fa-paint-brush red"></i>
+        </div>
+        <div class="color" id="orange">
+          <i class="fas fa-paint-brush orange"></i>
+        </div>
+        <div class="color" id="yellow">
+          <i class="fas fa-paint-brush yellow"></i>
+        </div>
+        <div class="color" id="green">
+          <i class="fas fa-paint-brush green"></i>
+        </div>
+        <div class="color" id="blue">
+          <i class="fas fa-paint-brush blue"></i>
+        </div>
+        <div class="color" id="#7400B2">
+          <i class="fas fa-paint-brush violet"></i>
+        </div>
+        <div class="color" id="black">
+          <i class="fas fa-paint-brush black"></i>
+        </div>
+      </div>
+      <!-- END Paintbrushes -->
+      <div class="line-width">
+        <!-- Brush Settings -->
+        <i class="fas fa-paint-brush plain" id="sm-brush"></i>
+        <input class="slider" label="line width" type="range" min="1" max="20" step="1">
+        <i class="fas fa-paint-brush plain" id="lg-brush"></i>
+      </div>
+      <!-- End Brush Settings -->
+      <div class="line-width">
+        <i class="fas fa-eraser plain color" id="sm-brush"></i>
+        <input class="slider eraser" label="line width" type="range" min="1" max="20" step="1">
+        <i class="fas fa-eraser plain color" id="lg-brush"></i>
+      </div>
     </div>
+    <!-- End edit tools -->
+
     <div id="drawing"></div>
   </div>
 </body>

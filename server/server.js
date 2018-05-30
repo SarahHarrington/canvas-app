@@ -16,7 +16,6 @@ io.on('connection', socket => {
   console.log('a user connected');
   console.log(socket.id)
   drawing.clients[socket.id] = socket.id;
-  console.log(drawing.clients)
 
   socket.emit('newClientConnection', {
     id: socket.id

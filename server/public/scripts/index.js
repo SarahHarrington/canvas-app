@@ -37,13 +37,13 @@ function domReady() {
   })
 
   let lineWidth = document.querySelector('.line-width').addEventListener('mouseup', updateLineWidth);
-
+  let eraserWidth = document.querySelector('.eraser').addEventListener('mouseup', eraserTime);
 
   console.log(colors)
 
   function updateColor(e) {
     console.log(e)
-    mouse.color = e.target.getAttribute('id');
+    mouse.color = e.currentTarget.getAttribute('id');
     console.log(mouse.color)
   }
 
@@ -51,6 +51,13 @@ function domReady() {
     console.log(e.target.value);
     mouse.lineWidth = parseInt(e.target.value);
     console.log(mouse.lineWidth);
+  }
+
+  function eraserTime(e) {
+    console.log('eraser clicked')
+    mouse.color = 'white';
+    updateLineWidth(e);
+    console.log(mouse.color)
   }
 
   function drawing(e) {
