@@ -23,7 +23,7 @@ io.on('connection', socket => {
   })
 
   socket.on('userDrawing', line => {    
-    io.broadcast.emit('userDrawing', line)
+    io.emit('userDrawing', line)
   })
 
 });

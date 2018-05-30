@@ -18,7 +18,6 @@ function domReady() {
   canvas.classList.add('drawing');
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
-  // ctx.strokeStyle = `${mouse.color}`;
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
   ctx.lineWidth = 5;
@@ -34,6 +33,9 @@ function domReady() {
     color.addEventListener('click', updateColor)
   })
 
+  let lineWidth = document.querySelector('.line-width').addEventListener('mouseup', updateLineWidth);
+
+
   console.log(colors)
 
   function updateColor(e) {
@@ -41,11 +43,18 @@ function domReady() {
     console.log(mouse.color)
   }
 
+  function updateLineWidth(e) {
+    console.log(e.target.value);
+    mouse.lineWidth = parseInt(e.target.value);
+    console.log(mouse.lineWidth);
+  }
+
   function drawing(e) {
     if (!drawingActive) {
       return
     }
     ctx.strokeStyle = `${mouse.color}`;
+    ctx.lineWidth = mouse.lineWidth;
     ctx.beginPath();
     ctx.moveTo(mouse.endX, mouse.endY);
     ctx.lineTo(e.offsetX, e.offsetY);
@@ -58,6 +67,7 @@ function domReady() {
 
   socket.on('userDrawing', (line) => {
     ctx.strokeStyle = `${line.color}`;
+    ctx.lineWidth = line.lineWidth;
     ctx.beginPath();
     ctx.moveTo(line.startX, line.startY);
     ctx.lineTo(line.endX, line.endY);

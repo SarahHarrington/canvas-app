@@ -1,16 +1,24 @@
+body {
+  background: darkgrey;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
 h1 {
   font-family: 'Permanent Marker', cursive;
 }
 
 .drawing {
   border: solid 1px black;
-  height: 100%;
-  width: 100%;
+  background: white;
 }
 
 .color-select {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   grid-gap: 20px;
 }
 
@@ -18,7 +26,6 @@ h1 {
   height: 30px;
   border-radius: 5px;
   margin-bottom: 10px;
-  /* width: 20px; */
 }
 
 .red {
@@ -42,5 +49,5 @@ h1 {
 }
 
 .violet {
-  background: purple;
+  background: #7400B2;
 }
