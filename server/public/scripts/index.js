@@ -16,6 +16,8 @@ function domReady() {
   }
 
   canvas.classList.add('drawing');
+  // canvas.height = Math.round(window.innerHeight * .9);
+  // canvas.width = Math.round(window.innerWidth * .9);
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
   ctx.lineJoin = 'round';
