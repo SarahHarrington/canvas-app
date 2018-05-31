@@ -30,7 +30,7 @@ header {
 }
 
 .usersNum {
-  font-size: 20px;
+  font-size: 2vh;
 }
 
 .drawing {
@@ -44,7 +44,8 @@ header {
   align-items: center;
   grid-gap: 20px;
   background: #575757;
-  padding: 10px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   width: 100vw;
 }
 
@@ -56,12 +57,12 @@ header {
   grid-column: span 1;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-gap: 10px;
+  grid-gap: .3rem;
   align-items: center;
 }
 
 .color {
-  font-size: 4vh;
+  font-size: 1.5rem;
 }
 
 .color:hover {
@@ -116,22 +117,43 @@ header {
 }
 
 #sm-brush {
-  font-size: 2vh;
+  font-size: 1rem;
 }
 
 #md-brush {
-  font-size: 3vh;
+  font-size: 1.2rem;
 }
 
 #lg-brush {
-  font-size: 4vh;
+  font-size: 1.5rem;
+}
+
+input {
+  width: 15vw;
 }
 
 .clean {
   font-family: 'Permanent Marker', cursive;
-  font-size: 2vh;
+  font-size: 1rem;
 }
 
 .clean:hover {
   cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+  .header {
+    font-size: 2rem;
+  }
+  .usersNum {
+    font-size: 1rem;
+  }
+
+  .editing-tools {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    width: 100vw;
+  }
 }

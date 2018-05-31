@@ -2,12 +2,14 @@ function domReady() {
   const socket = io();
   let canvas = document.createElement('canvas');
   let ctx = canvas.getContext('2d');
+
   canvas.classList.add('drawing');
-  canvas.height = window.innerHeight;
+  canvas.height = window.innerHeight * 0.85;
   canvas.width = window.innerWidth;
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
   ctx.lineWidth = 5;
+
   let drawingActive = false;
   let mouse = {
     startX: 0,
@@ -19,7 +21,7 @@ function domReady() {
   }
   let users = [];
   let usersNum = document.querySelector('.usersNum');
-  let lineWidth = document.querySelector('.line-width').addEventListener('mouseup', updateLineWidth);
+  let lineWidth = document.querySelector('.line-width');
   let clean = document.querySelector('.clean').addEventListener('click', cleanCanvas);
 
   //Collects colors and adds event listeners to paint brushes
@@ -44,6 +46,7 @@ function domReady() {
   }
 
   function updateLineWidth(e) {
+    console.log(e.target.value);
     mouse.lineWidth = parseInt(e.target.value);
   }
 
@@ -75,18 +78,30 @@ function domReady() {
   }
 
   function drawing(e) {
+    e.preventDefault();
     if (!drawingActive) {
       return
     }
-    ctx.strokeStyle = `${mouse.color}`;
-    ctx.lineWidth = mouse.lineWidth;
-    ctx.beginPath();
-    ctx.moveTo(mouse.endX, mouse.endY);
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    [mouse.startX, mouse.startY] = [mouse.endX, mouse.endY];
-    [mouse.endX, mouse.endY] = [e.offsetX, e.offsetY];
-
+    if (e.type === 'mousemove') {
+      ctx.strokeStyle = `${mouse.color}`;
+      ctx.lineWidth = mouse.lineWidth;
+      ctx.beginPath();
+      ctx.moveTo(mouse.endX, mouse.endY);
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+      [mouse.startX, mouse.startY] = [mouse.endX, mouse.endY];
+      [mouse.endX, mouse.endY] = [e.offsetX, e.offsetY];
+    }
+    if (e.type === 'touchmove') {
+      ctx.strokeStyle = `${mouse.color}`;
+      ctx.lineWidth = mouse.lineWidth;
+      ctx.beginPath();
+      ctx.moveTo(mouse.endX, mouse.endY);
+      ctx.lineTo(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+      ctx.stroke();
+      [mouse.startX, mouse.startY] = [mouse.endX, mouse.endY];
+      [mouse.endX, mouse.endY] = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
+    }
     socket.emit('userDrawing', mouse);
   }
 
@@ -120,6 +135,7 @@ function domReady() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   })
 
+  //event listeners for computer
   canvas.addEventListener('mousedown', (e) => {
     drawingActive = true;
     [mouse.endX, mouse.endY] = [e.offsetX, e.offsetY];
@@ -129,6 +145,20 @@ function domReady() {
     drawingActive = false
   });
   canvas.addEventListener('mouseout', () => drawingActive = false);
+
+  //event listeners for touch device
+  canvas.addEventListener('touchstart', (e) => {
+    drawingActive = true;
+    [mouse.endX, mouse.endY] = [e.touches[0].pageX, e.touches[0].pageY];
+  })
+  canvas.addEventListener('touchmove', drawing);
+  canvas.addEventListener('touchend', (e) => {
+    drawingActive = false;
+  })
+  canvas.addEventListener('touchcancel', () => drawingActive = false);
+
+  lineWidth.addEventListener('mouseup', updateLineWidth);
+  lineWidth.addEventListener('touchend', updateLineWidth);
   // window.addEventListener('resize', windowResize);
 }
 
