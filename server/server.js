@@ -12,23 +12,29 @@ let drawing = {
   last: {}
 }
 
+let users = [];
+
 io.on('connection', socket => {
   console.log('a user connected');
-  console.log(socket.id)
   drawing.clients[socket.id] = socket.id;
-
-  socket.emit('newClientConnection', {
-    id: socket.id
-  })
-
+  users.push(socket.id);
+  socket.emit('newClientConnection', users.length)
+  io.emit('newClientConnection', users.length);
   socket.on('userDrawing', line => {    
-    io.emit('userDrawing', line);
+    socket.broadcast.emit('userDrawing', line);
   })
 
   socket.on('cleanCanvas', e => {
     io.emit('cleanCanvas', e);
-  }) 
+  })
 
+  socket.on('disconnect', () => {
+    console.log('a user disconnected');
+    users.pop();
+    io.emit('clientDisconnected', users.length);
+  })
 });
+
+
 
 http.listen(PORT, () => console.log(`listening on port ${PORT}`));

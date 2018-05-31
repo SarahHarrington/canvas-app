@@ -6,9 +6,17 @@ body {
 
 .container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(autofit, 1fr);
   grid-template-rows: auto;
   justify-items: center;
+}
+
+header {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  width: 100vw;
 }
 
 .header {
@@ -17,18 +25,31 @@ body {
   margin: 0;
 }
 
+.user-count {
+  font-family: 'Permanent Marker', cursive;
+}
+
+.usersNum {
+  font-size: 20px;
+}
+
 .drawing {
   background: white;
 }
 
 .editing-tools {
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-items: center;
   align-items: center;
   grid-gap: 20px;
   background: #575757;
-  padding: 1vh 1vw;
+  padding: 10px;
+  width: 100vw;
+}
+
+.active-tool {
+  text-shadow: 0 0 15px #B8D8D8;
 }
 
 .color-select {
@@ -48,23 +69,23 @@ body {
 }
 
 .red {
-  color: red;
+  color: #E82C2C;
 }
 
 .orange {
-  color: orange;
+  color: #FF9635;
 }
 
 .yellow {
-  color: yellow;
+  color: #FFD35D;
 }
 
 .green {
-  color: green;
+  color: #76B512;
 }
 
 .blue {
-  color: blue;
+  color: #005991;
 }
 
 .violet {
