@@ -22,8 +22,12 @@ io.on('connection', socket => {
   })
 
   socket.on('userDrawing', line => {    
-    io.emit('userDrawing', line)
+    io.emit('userDrawing', line);
   })
+
+  socket.on('cleanCanvas', e => {
+    io.emit('cleanCanvas', e);
+  }) 
 
 });
 

@@ -2,12 +2,12 @@ body {
   background: #191919;
   color: #B8D8D8;
   margin: 0;
-
 }
 
 .container {
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: auto;
   justify-items: center;
 }
 
@@ -23,12 +23,12 @@ body {
 
 .editing-tools {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, auto);
   justify-items: center;
   align-items: center;
   grid-gap: 20px;
   background: #575757;
-  padding: 1vh;
+  padding: 1vh 1vw;
 }
 
 .color-select {
@@ -41,6 +41,10 @@ body {
 
 .color {
   font-size: 4vh;
+}
+
+.color:hover {
+  cursor: pointer;
 }
 
 .red {
@@ -71,15 +75,19 @@ body {
   color: black;
 }
 
-.slider {
-  /* background-color: #2D2D2D; */
-}
-
 .line-width {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   justify-items: center;
+}
+
+.erasers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
+  grid-gap: 10px;
 }
 
 .plain {
@@ -90,6 +98,19 @@ body {
   font-size: 2vh;
 }
 
+#md-brush {
+  font-size: 3vh;
+}
+
 #lg-brush {
   font-size: 4vh;
+}
+
+.clean {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 2vh;
+}
+
+.clean:hover {
+  cursor: pointer;
 }

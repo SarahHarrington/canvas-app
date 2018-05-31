@@ -1,7 +1,8 @@
-console.log('javascript loaded');
-
 function domReady() {
   const socket = io();
+
+  // window.addEventListener('resize', resizeCanvas);
+
   let canvas = document.createElement('canvas');
   let ctx = canvas.getContext('2d');
 
@@ -16,8 +17,6 @@ function domReady() {
   }
 
   canvas.classList.add('drawing');
-  // canvas.height = Math.round(window.innerHeight * .9);
-  // canvas.width = Math.round(window.innerWidth * .9);
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
   ctx.lineJoin = 'round';
@@ -30,34 +29,51 @@ function domReady() {
     document.body.appendChild(canvas);
   })
 
+  //Collects colors and adds event listeners to paint brushes
   let colors = document.querySelectorAll('.color');
-  console.log(colors)
   colors.forEach( (color) => {
-    color.addEventListener('click', updateColor)
+    color.addEventListener('click', updateColor);
   })
 
-  let lineWidth = document.querySelector('.line-width').addEventListener('mouseup', updateLineWidth);
-  let eraserWidth = document.querySelector('.eraser').addEventListener('mouseup', eraserTime);
+  //Collects erasers and adds event listeners to erasers
+  let erasers = document.querySelectorAll('.eraser');
+  erasers.forEach((eraser) => {
+    eraser.addEventListener('click', eraserTime);
+  });
 
-  console.log(colors)
+  let lineWidth = document.querySelector('.line-width').addEventListener('mouseup', updateLineWidth);
+  let clean = document.querySelector('.clean').addEventListener('click', cleanCanvas);
+
+  // function resizeCanvas() {
+  //   canvas.height = window.innerHeight;
+  //   canvas.width = window.innerWidth;
+  // }
 
   function updateColor(e) {
-    console.log(e)
     mouse.color = e.currentTarget.getAttribute('id');
-    console.log(mouse.color)
   }
 
   function updateLineWidth(e) {
-    console.log(e.target.value);
     mouse.lineWidth = parseInt(e.target.value);
-    console.log(mouse.lineWidth);
   }
 
   function eraserTime(e) {
-    console.log('eraser clicked')
+    console.log(e.target.classList.contains('10'));
     mouse.color = 'white';
-    updateLineWidth(e);
-    console.log(mouse.color)
+    if (e.target.classList.contains('5') === true) {
+      mouse.lineWidth = 5;
+    }
+    if (e.target.classList.contains('25') === true) {
+      mouse.lineWidth = 25;
+    }
+    if (e.target.classList.contains('100') === true) {
+      mouse.lineWidth = 100;
+    }
+  }
+
+  function cleanCanvas(e) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    socket.emit('cleanCanvas', e)
   }
 
   function drawing(e) {
@@ -85,6 +101,10 @@ function domReady() {
     ctx.stroke();
   })
 
+  socket.on('cleanCanvas', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  })
+
   canvas.addEventListener('mousedown', (e) => {
     drawingActive = true;
     [mouse.endX, mouse.endY] = [e.offsetX, e.offsetY];
@@ -92,8 +112,6 @@ function domReady() {
   canvas.addEventListener('mousemove', drawing);
   canvas.addEventListener('mouseup', (e) => {
     drawingActive = false
-    console.log(e);
-    console.log(drawingActive)
   });
   canvas.addEventListener('mouseout', () => drawingActive = false);
 }
