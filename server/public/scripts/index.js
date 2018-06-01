@@ -49,7 +49,6 @@ function domReady() {
   }
 
   function updateLineWidth(e) {
-    console.log(e.target.value);
     mouse.lineWidth = parseInt(e.target.value);
   }
 
@@ -81,7 +80,6 @@ function domReady() {
   }
 
   function drawing(e) {
-    console.log(e);
     e.preventDefault();
     if (!drawingActive) {
       return
@@ -114,7 +112,6 @@ function domReady() {
     document.body.appendChild(canvas);
     updateUsers(data);
     offsetTop = document.getElementsByTagName('canvas')["0"].offsetTop;
-    console.log(offsetTop)
   })
 
   socket.on('clientDisconnected', (data) => {

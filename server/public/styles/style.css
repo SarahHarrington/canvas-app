@@ -16,7 +16,7 @@ header {
   grid-template-columns: 1fr;
   align-items: center;
   justify-items: center;
-  width: 100vw;
+  /* width: 100vw; */
 }
 
 .header {
@@ -27,6 +27,7 @@ header {
 
 .user-count {
   font-family: 'Permanent Marker', cursive;
+  margin: 0;
 }
 
 .usersNum {
@@ -42,11 +43,11 @@ header {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-items: center;
   align-items: center;
-  grid-gap: 20px;
+  grid-gap: 3rem;
   background: #575757;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  width: 100vw;
+  /* width: 100vw; */
 }
 
 .active-tool {
@@ -86,7 +87,7 @@ header {
 }
 
 .blue {
-  color: #005991;
+  color: #1A5CD8;
 }
 
 .violet {
@@ -104,12 +105,20 @@ header {
   justify-items: center;
 }
 
+.slider:hover {
+  cursor: pointer;
+}
+
 .erasers {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   justify-items: center;
   grid-gap: 10px;
+}
+
+.erasers:hover {
+  cursor: pointer;
 }
 
 .plain {
@@ -135,10 +144,14 @@ input {
 .clean {
   font-family: 'Permanent Marker', cursive;
   font-size: 1rem;
+  background: #575757;
+  color: white;
+  border: none;
 }
 
 .clean:hover {
   cursor: pointer;
+  text-shadow: 0 0 15px #B8D8D8;
 }
 
 @media screen and (max-width: 500px) {
@@ -155,5 +168,8 @@ input {
     justify-items: center;
     align-items: center;
     width: 100vw;
+    padding-top: .2rem;
+    padding-bottom: .5rem;
+    grid-gap: 1rem;
   }
 }
