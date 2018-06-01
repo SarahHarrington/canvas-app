@@ -4,12 +4,15 @@ function domReady() {
   let ctx = canvas.getContext('2d');
 
   canvas.classList.add('drawing');
-  canvas.height = window.innerHeight * 0.85;
+  canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
   ctx.lineWidth = 5;
-
+  
+  // let canvasSize = document.getElementsByTagName('canvas');
+  // console.log('canvasSize', canvasSize);
+  
   let drawingActive = false;
   let mouse = {
     startX: 0,
@@ -78,6 +81,7 @@ function domReady() {
   }
 
   function drawing(e) {
+    console.log(e);
     e.preventDefault();
     if (!drawingActive) {
       return
@@ -97,25 +101,20 @@ function domReady() {
       ctx.lineWidth = mouse.lineWidth;
       ctx.beginPath();
       ctx.moveTo(mouse.endX, mouse.endY);
-      ctx.lineTo(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+      ctx.lineTo(e.changedTouches[0].pageX, e.changedTouches[0].pageY - offsetTop);
       ctx.stroke();
       [mouse.startX, mouse.startY] = [mouse.endX, mouse.endY];
-      [mouse.endX, mouse.endY] = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
+      [mouse.endX, mouse.endY] = [e.changedTouches[0].pageX, e.changedTouches[0].pageY - offsetTop];
     }
     socket.emit('userDrawing', mouse);
   }
 
-  // function windowResize() {
-  //   console.log('the window is changing!!!!')
-  //   let editor = document.querySelector('.editing-tools');
-  //   console.log(canvas.width)
-  //   editor.style.width = canvas.width;
-
-  // }
-
+  let offsetTop = 0;
   socket.on('newClientConnection', (data) => {
     document.body.appendChild(canvas);
     updateUsers(data);
+    offsetTop = document.getElementsByTagName('canvas')["0"].offsetTop;
+    console.log(offsetTop)
   })
 
   socket.on('clientDisconnected', (data) => {
@@ -149,7 +148,7 @@ function domReady() {
   //event listeners for touch device
   canvas.addEventListener('touchstart', (e) => {
     drawingActive = true;
-    [mouse.endX, mouse.endY] = [e.touches[0].pageX, e.touches[0].pageY];
+    [mouse.endX, mouse.endY] = [e.touches[0].pageX, e.touches[0].pageY - offsetTop];
   })
   canvas.addEventListener('touchmove', drawing);
   canvas.addEventListener('touchend', (e) => {
@@ -159,7 +158,6 @@ function domReady() {
 
   lineWidth.addEventListener('mouseup', updateLineWidth);
   lineWidth.addEventListener('touchend', updateLineWidth);
-  // window.addEventListener('resize', windowResize);
 }
 
 document.addEventListener('DOMContentLoaded', domReady);
