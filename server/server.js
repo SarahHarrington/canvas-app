@@ -7,34 +7,34 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(`${__dirname}/public`));
 
 let drawing = {
-  clients: {},
-  paths: {},
-  last: {}
+  users: [],
+  lineHistory: []
 }
 
-let users = [];
+// let users = [];
+// let lineHistory = [];
 
 io.on('connection', socket => {
   console.log('a user connected');
-  drawing.clients[socket.id] = socket.id;
-  users.push(socket.id);
-  socket.emit('newClientConnection', users.length)
-  io.emit('newClientConnection', users.length);
+  drawing.users.push(socket.id);
+  socket.emit('newClientConnection', drawing)
+  io.emit('newClientConnection', drawing);
   socket.on('userDrawing', line => {    
     socket.broadcast.emit('userDrawing', line);
+    drawing.lineHistory.push(line);
   })
 
   socket.on('cleanCanvas', e => {
+    drawing.lineHistory = [];
     io.emit('cleanCanvas', e);
   })
 
   socket.on('disconnect', () => {
     console.log('a user disconnected');
-    users.pop();
-    io.emit('clientDisconnected', users.length);
+    drawing.users.pop();
+    io.emit('clientDisconnected', drawing.users.length);
   })
 });
-
 
 
 http.listen(PORT, '127.0.0.1');

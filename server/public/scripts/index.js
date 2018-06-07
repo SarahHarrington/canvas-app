@@ -109,9 +109,21 @@ function domReady() {
 
   let offsetTop = 0;
   socket.on('newClientConnection', (data) => {
+    console.log('data', data);
+    let users = data.users.length;
     document.body.appendChild(canvas);
-    updateUsers(data);
+    updateUsers(users);
     offsetTop = document.getElementsByTagName('canvas')["0"].offsetTop;
+    let lines = data.lineHistory;
+    console.log('lineHistory', lines)
+    lines.forEach((line) => {
+      ctx.strokeStyle = `${line.color}`;
+      ctx.lineWidth = line.lineWidth;
+      ctx.beginPath();
+      ctx.moveTo(line.startX, line.startY);
+      ctx.lineTo(line.endX, line.endY);
+      ctx.stroke();
+    })
   })
 
   socket.on('clientDisconnected', (data) => {
