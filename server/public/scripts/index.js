@@ -26,7 +26,6 @@ function domReady() {
   let usersNum = document.querySelector('.usersNum');
   let lineWidth = document.querySelector('.line-width');
   let clean = document.querySelector('.clean').addEventListener('click', cleanCanvas);
-
   //Collects colors and adds event listeners to paint brushes
   let colors = document.querySelectorAll('.color');
   colors.forEach((color) => {
@@ -69,7 +68,7 @@ function domReady() {
       e.target.classList.add('active-tool');
     }
   }
-
+  
   function cleanCanvas(e) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     socket.emit('cleanCanvas', e)

@@ -11,9 +11,6 @@ let drawing = {
   lineHistory: []
 }
 
-// let users = [];
-// let lineHistory = [];
-
 io.on('connection', socket => {
   console.log('a user connected');
   drawing.users.push(socket.id);
