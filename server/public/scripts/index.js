@@ -26,6 +26,8 @@ function domReady() {
   let usersNum = document.querySelector('.usersNum');
   let lineWidth = document.querySelector('.line-width');
   let clean = document.querySelector('.clean').addEventListener('click', cleanCanvas);
+  let colorPicker = document.querySelector('.color-picker');
+  
   //Collects colors and adds event listeners to paint brushes
   let colors = document.querySelectorAll('.color');
   colors.forEach((color) => {
@@ -37,6 +39,11 @@ function domReady() {
   erasers.forEach((eraser) => {
     eraser.addEventListener('click', eraserTime);
   });
+
+  function colorPickerUpdate(e) {
+    console.log(e.target.value)
+    mouse.color = e.target.value;
+  }
 
   function updateColor(e) {
     colors.forEach((color) => color.classList.remove('active-tool'));
@@ -108,13 +115,11 @@ function domReady() {
 
   let offsetTop = 0;
   socket.on('newClientConnection', (data) => {
-    console.log('data', data);
     let users = data.users.length;
     document.body.appendChild(canvas);
     updateUsers(users);
     offsetTop = document.getElementsByTagName('canvas')["0"].offsetTop;
     let lines = data.lineHistory;
-    console.log('lineHistory', lines)
     lines.forEach((line) => {
       ctx.strokeStyle = `${line.color}`;
       ctx.lineWidth = line.lineWidth;
@@ -163,6 +168,8 @@ function domReady() {
     drawingActive = false;
   })
   canvas.addEventListener('touchcancel', () => drawingActive = false);
+
+  colorPicker.addEventListener('input', colorPickerUpdate);
 
   lineWidth.addEventListener('mouseup', updateLineWidth);
   lineWidth.addEventListener('touchend', updateLineWidth);

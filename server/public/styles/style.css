@@ -40,7 +40,7 @@ header {
 
 .editing-tools {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   justify-items: center;
   align-items: center;
   grid-gap: 3rem;
@@ -57,7 +57,7 @@ header {
 .color-select {
   grid-column: span 1;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   grid-gap: .3rem;
   align-items: center;
 }
@@ -96,6 +96,11 @@ header {
 
 .black {
   color: black;
+}
+
+.color-picker {
+  width: 2rem;
+  /* background-color: none; */
 }
 
 .line-width {
