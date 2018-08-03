@@ -19,3 +19,5 @@ HTML, CSS, JavaScript, Node.js, and Socket.io, Google Fonts, and Font Awesome
 
 ## Author
 Sarah Harrington
+
+![image](https://user-images.githubusercontent.com/23586622/43661207-0a6b83f4-9727-11e8-84ab-c2359df984e8.png)
