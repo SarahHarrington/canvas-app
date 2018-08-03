@@ -40,10 +40,10 @@ function domReady() {
     eraser.addEventListener('click', eraserTime);
   });
 
-  function colorPickerUpdate(e) {
-    console.log(e.target.value)
-    mouse.color = e.target.value;
-  }
+  // function colorPickerUpdate(e) {
+  //   console.log(e.target.value)
+  //   mouse.color = e.target.value;
+  // }
 
   function updateColor(e) {
     colors.forEach((color) => color.classList.remove('active-tool'));
@@ -169,7 +169,7 @@ function domReady() {
   })
   canvas.addEventListener('touchcancel', () => drawingActive = false);
 
-  colorPicker.addEventListener('input', colorPickerUpdate);
+  // colorPicker.addEventListener('input', colorPickerUpdate);
 
   lineWidth.addEventListener('mouseup', updateLineWidth);
   lineWidth.addEventListener('touchend', updateLineWidth);
