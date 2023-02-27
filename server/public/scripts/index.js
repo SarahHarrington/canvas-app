@@ -27,6 +27,7 @@ function domReady() {
   let lineWidth = document.querySelector('.line-width');
   let clean = document.querySelector('.clean').addEventListener('click', cleanCanvas);
   let colorPicker = document.querySelector('.color-picker');
+  colorPicker.addEventListener('change', colorPickerUpdate);
   
   //Collects colors and adds event listeners to paint brushes
   let colors = document.querySelectorAll('.color');
@@ -40,16 +41,19 @@ function domReady() {
     eraser.addEventListener('click', eraserTime);
   });
 
-  // function colorPickerUpdate(e) {
-  //   console.log(e.target.value)
-  //   mouse.color = e.target.value;
-  // }
+  function colorPickerUpdate(e) {
+    colors.forEach((color) => color.classList.remove('active-tool'));
+    mouse.color = e.target.value;
+  }
 
   function updateColor(e) {
     colors.forEach((color) => color.classList.remove('active-tool'));
     erasers.forEach((eraser) => eraser.classList.remove('active-tool'));
     if (e.target.classList.contains('active-tool') === false) {
       e.target.classList.add('active-tool')
+    }
+    if (e.target.classList.contains('picker')) {
+      mouse.color = e.target.value;
     }
     mouse.color = e.currentTarget.getAttribute('id');
   }
@@ -112,6 +116,8 @@ function domReady() {
     }
     socket.emit('userDrawing', mouse);
   }
+
+  
 
   let offsetTop = 0;
   socket.on('newClientConnection', (data) => {
