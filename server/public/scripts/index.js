@@ -1,8 +1,9 @@
 function domReady() {
-  const socket = io();
+  // const socket = io("ws://ec2-34-237-223-120.compute-1.amazonaws.com:3000");
+  const socket = io("wss://canvasplayground.sarahdoes.tech");
   let canvas = document.createElement('canvas');
   let ctx = canvas.getContext('2d');
-
+  
   canvas.classList.add('drawing');
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
